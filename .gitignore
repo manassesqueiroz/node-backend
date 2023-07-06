@@ -5,3 +5,9 @@ node_modules
 dist
 
 .vercel
+
+.vercel
+
+prisma/migrations
+
+prisma/dev.db
