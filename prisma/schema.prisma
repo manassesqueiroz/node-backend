@@ -7,9 +7,7 @@ generator client {
 
 datasource db {
   provider          = "postgresql"
-  url               = env("DATABASE_PRISMA_URL") // uses connection pooling
-  directUrl         = env("DATABASE_URL_NON_POOLING") // uses a direct connection
-  shadowDatabaseUrl = env("DATABASE_URL_NON_POOLING") // used for migrations
+  url               = "postgres://ignite_nodejs_02_db_zxhy_user:PUKu5HR96P99sXaDkv15DuKYpOxFyKAO@dpg-ciibn4tph6erq6nr43gg-a.ohio-postgres.render.com/ignite_nodejs_02_db_zxhy" // uses connection pooling
 }
 
 model User {
