@@ -11,7 +11,7 @@ server.register( Posts, {
   prefix: 'posts',
 } )
 
-server.listen({port:5000}, (err) => {
+server.listen({port:3000}, (err) => {
   if (err) {
     console.error('Erro ao iniciar o servidor:', err);
     process.exit(1);
