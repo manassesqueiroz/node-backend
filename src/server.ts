@@ -11,10 +11,10 @@ server.register( Posts, {
   prefix: 'posts',
 } )
 
-server.listen({port:3000}, (err) => {
+server.listen({port:5000}, (err) => {
   if (err) {
     console.error('Erro ao iniciar o servidor:', err);
     process.exit(1);
   }
-  console.log('Servidor iniciado em http://localhost:3000');
+  console.log('AGORA VAIII!!!!');
 });
