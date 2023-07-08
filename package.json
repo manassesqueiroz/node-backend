@@ -9,7 +9,7 @@
   "scripts": {
     "postinstall": "prisma generate",
     "build": "tsc -p tsconfig.json",
-    "vercel-build": "npm install && tsc -p tsconfig.json && npx prisma migrate deploy",
+    "vercel-build": "npm run build && npx prisma migrate deploy",
     "dev": "ts-node-dev --respawn --transpile-only --ignore-watch node-modules src/server.ts",
     "dev:server": "ts-node ./src/server.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
