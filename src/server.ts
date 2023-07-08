@@ -6,6 +6,10 @@ import { Posts } from './routes/Posts';
 const server = fastify()
 server.register(multipart)
 
+
+server.get('/test', () => {
+  return 'hello world'
+}) 
 server.register( Users ) 
 server.register( Posts, {
   prefix: 'posts',
