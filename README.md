@@ -1,27 +1,113 @@
-<h1>Projeto de Backend</h1>
-<p>Este é um projeto de backend desenvolvido utilizando Node.js, Zod, Fastify e TypeScript. O objetivo deste projeto é criar uma API RESTful segura e escalável.</p>
+## Rotas
+### Rotas de User
+- Ver todos os Usuarios
+  ```
+  https://node-js-prisma-s-qlite3-crud-basic.vercel.app/
+  ```
+- Criar Usuario
+  ```
+  Rota
+  https://node-js-prisma-s-qlite3-crud-basic.vercel.app/
+  
+  
+  Body Json
+  {
+      "name": "EXEMPLO",
+	  "email": "EXEMPLO@gmail.com",
+  }
+  ```
+- Atualizar dados do Usuario
+  ```
+  Rota
+  https://node-js-prisma-s-qlite3-crud-basic.vercel.app/<id>
+  
+  
+  Body Json
+  {
+      "name": "EXEMPLO",
+	  "email": "EXEMPLO@gmail.com",
+  }
+  ```
+  
+ 
+- Deletar Usuario
+  ```
+  Rota
+  https://node-js-prisma-s-qlite3-crud-basic.vercel.app/<id>
+  ```
+### Rotas de Posts
+- Ver todos os Posts
+  ```
+  https://node-js-prisma-s-qlite3-crud-basic.vercel.app/posts
+  ```
+- Criar Post
+  ```
+  Rota
+  https://node-js-prisma-s-qlite3-crud-basic.vercel.app/posts
+  
+  
+  Body Json
+  {
+          "title": "comprando um computador gamer",
+		"content": "0800 um dois três",
+		"published": false
+  }
+  
+  ```
+ - Atualizar dados do Posts
+     
+   ```
+            Rota
+            https://node-js-prisma-s-qlite3-crud-basic.vercel.app/posts/<authorId>
+            
+            
+            Body Json
+            {
+               "id":"e5ac3b6c-e290-4a42-aa5e-a6573348c019"
+               "title": "comprando um computador gamer",
+               "content": "0800 um dois três",
+               "published": false
+            }
+  
+   ```
+- Deleter Post
+     
+   ```
+            Rota
+            https://node-js-prisma-s-qlite3-crud-basic.vercel.app/posts/<authorId>
+            
+            
+            Body Json
+            {
+               "id":"e5ac3b6c-e290-4a42-aa5e-a6573348c019"
+            }
+  
+   ```
 
-<h2>Tecnologias Utilizadas</h2>
-<ul>
-  <li>Node.js: Ambiente de execução JavaScript assíncrono e de código aberto, utilizado para desenvolvimento de servidores.</li>
-  <li>Zod: Biblioteca de validação de esquemas TypeScript eficiente, utilizada para garantir a validade das requisições recebidas pela API.</li>
-  <li>Fastify: Framework web rápido e eficiente construído em cima do Node.js, ideal para construir APIs escaláveis e de alto desempenho.</li>
-  <li>TypeScript: Linguagem de programação que adiciona tipagem estática ao JavaScript, proporcionando um código mais robusto e com menos erros.</li>
-</ul>
+  
+# Projeto de Backend
+Este é um projeto de backend desenvolvido utilizando Node.js, Zod, Fastify e TypeScript. O objetivo deste projeto é criar uma API RESTful segura e escalável.
 
-<h2>Banco de Dados</h2>
-<p>Para persistência de dados, foi utilizado o SQLite3 como banco de dados e o Prisma como ORM (Object-Relational Mapping). O Prisma facilita o trabalho com bancos de dados, tornando a interação com eles mais intuitiva e produtiva. As tabelas do banco de dados utilizadas neste projeto são:</p>
+## Tecnologias Utilizadas
 
-<ul>
-  <li>Tabela User: Armazena informações sobre os usuários da aplicação, como nome, e-mail, data de criação e atualização, além de relacionamentos com os posts.</li>
-  <li>Tabela Post: Armazena informações sobre as postagens, como título, conteúdo, data de criação, se foi publicado e o autor da postagem.</li>
-</ul>
+ - Node.js: Ambiente de execução JavaScript assíncrono e de código aberto, utilizado para desenvolvimento de servidores.
+ - Zod: Biblioteca de validação de esquemas TypeScript eficiente, utilizada para garantir a validade das requisições recebidas pela API.
+ - Fastify: Framework web rápido e eficiente construído em cima do Node.js, ideal para construir APIs escaláveis e de alto desempenho.
+ - TypeScript: Linguagem de programação que adiciona tipagem estática ao JavaScript, proporcionando um código mais robusto e com menos erros.
 
-<h2>Trecho de Código</h2>
-<p>Segue abaixo um trecho de código exemplificando a implementação do backend:</p>
 
-<pre>
-  <code>
+ ## Banco de Dados
+Para persistência de dados, foi utilizado o SQLite3 como banco de dados e o Prisma como ORM (Object-Relational Mapping). O Prisma facilita o trabalho com bancos de dados, tornando a interação com eles mais intuitiva e produtiva. As tabelas do banco de dados utilizadas neste projeto são:
+
+
+  - Tabela User: Armazena informações sobre os usuários da aplicação, como nome, e-mail, data de criação e atualização, além de relacionamentos com os posts.</li>
+  - Tabela Post: Armazena informações sobre as postagens, como título, conteúdo, data de criação, se foi publicado e o autor da postagem.</li>
+
+
+## Trecho de Código
+Segue abaixo um trecho de código exemplificando a implementação do backend:
+
+```
   import { FastifyInstance } from "fastify";
 import { prisma } from "../lib/prisma";
 import { string, z } from "zod";
@@ -99,7 +185,5 @@ export async function Users(app: FastifyInstance) {
   });
 
   // Endpoint DELETE
-
-  </code>
-</pre>
+```
 
