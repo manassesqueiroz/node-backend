@@ -1,13 +1,11 @@
 import { FastifyReply, FastifyRequest } from 'fastify'
 import { prisma } from '../../database/prisma'
 import { boolean, string, z } from 'zod'
+import { bodySchema } from './schemas'
 
 class PostControllers {
   async getPosts() {
     const posts = await prisma.post.findMany({
-      orderBy: {
-        content: 'asc',
-      },
       select: {
         id: true,
         title: true,
@@ -17,17 +15,11 @@ class PostControllers {
         published: true,
       },
     })
+
     return posts
   }
 
   async postPost(request: FastifyRequest, reply: FastifyReply) {
-    const bodySchema = z.object({
-      title: string(),
-      content: string(),
-      published: boolean(),
-      authorId: string(),
-    })
-
     const { authorId, published, content, title } = bodySchema.parse(
       request.body,
     )
@@ -37,7 +29,7 @@ class PostControllers {
         id: authorId,
       },
     })
-    console.log(seachUser)
+
     if (!seachUser) {
       return reply.status(401).send()
     }
@@ -54,7 +46,7 @@ class PostControllers {
 
   async putPost(request: FastifyRequest, reply: FastifyReply) {
     const bodySchema = z.object({
-      id: string(),
+      id: string().uuid({ message: 'Id inválido' }),
       title: string(),
       content: string(),
       published: boolean(),
