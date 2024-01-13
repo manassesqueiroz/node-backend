@@ -1,6 +1,7 @@
 import { string, z } from 'zod'
 import { prisma } from '../../database/prisma'
 import { FastifyReply, FastifyRequest } from 'fastify'
+import { CallError } from '../../helpers/callError'
 class UserControllers {
   async getUsers() {
     const users = await prisma.user.findMany({
@@ -15,13 +16,16 @@ class UserControllers {
         updatedAt: true,
       },
     })
+
+    throw new CallError('Error', 401)
+
     return users
   }
 
   async postUser(request: FastifyRequest) {
     const bodySchema = z.object({
       name: string(),
-      email: z.string(),
+      email: z.string().email({ message: 'Email inválido' }),
     })
 
     const { name, email } = bodySchema.parse(request.body)
