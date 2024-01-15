@@ -19,44 +19,8 @@ class PostControllers {
     return posts
   }
 
-  async postPost(request: FastifyRequest, reply: FastifyReply) {
-    const { authorId, published, content, title } = bodySchema.parse(
-      request.body,
-    )
-
-    const seachUser = await prisma.user.findUnique({
-      where: {
-        id: authorId,
-      },
-    })
-
-    if (!seachUser) {
-      return reply.status(401).send()
-    }
-    const createPost = await prisma.post.create({
-      data: {
-        title,
-        authorId,
-        content,
-        published,
-      },
-    })
-    return createPost
-  }
-
   async putPost(request: FastifyRequest, reply: FastifyReply) {
-    const bodySchema = z.object({
-      id: string().uuid({ message: 'Id inválido' }),
-      title: string(),
-      content: string(),
-      published: boolean(),
-    })
-    const paramsSchema = z.object({
-      userId: string(),
-    })
-
-    const { userId } = paramsSchema.parse(request.params)
-    const { id, title, content, published } = bodySchema.parse(request.body)
+    
 
     console.log(userId)
 
