@@ -9,7 +9,7 @@ type PropsPost = {
   published: boolean
   userId: string
 }
-class PutUserService {
+export class PutPostService {
   async execute({
     id,
     title,
@@ -26,10 +26,10 @@ class PutUserService {
     if (!seachPost) {
       throw new CallError('Post not found', 404)
     }
-
     if (userId !== seachPost.authorId) {
       throw new CallError('Error', 401)
     }
+
     const updatePost = await prisma.post.update({
       where: {
         id,
@@ -43,4 +43,3 @@ class PutUserService {
     return updatePost
   }
 }
-export { PutUserService }

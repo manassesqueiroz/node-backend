@@ -1,12 +1,13 @@
 import type { FastifyInstance } from 'fastify'
 
-import { PostControllers } from '../controllers/posts/posts-contrllers'
-import { CreatPostController } from '../controllers/posts/createPostControllers'
+import { PostPostController } from '../controllers/posts/postControllers'
+import { GetPostController } from '../controllers/posts/getControllers'
+import { PutPostController } from '../controllers/posts/putControllers'
+import { DeletePostController } from '../controllers/posts/deleteControllers'
 
-const postControllers = new PostControllers()
 export async function Posts(app: FastifyInstance) {
-  app.get('/', postControllers.getPosts)
-  app.post('/', new CreatPostController().handle)
-  app.put('/:userId', postControllers.putPost)
-  app.delete('/:userId', postControllers.deletePort)
+  app.get('/', new GetPostController().handle)
+  app.post('/', new PostPostController().handle)
+  app.put('/:userId', new PutPostController().handle)
+  app.delete('/:userId', new DeletePostController().handle)
 }

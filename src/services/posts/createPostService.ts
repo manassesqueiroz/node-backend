@@ -7,7 +7,7 @@ type Post = {
   content: string
   published: boolean
 }
-class CreateUserService {
+export class PostPostService {
   async execute({ title, authorId, content, published }: Post) {
     const seachUser = await prisma.user.findUnique({
       where: {
@@ -29,4 +29,3 @@ class CreateUserService {
     return createPost
   }
 }
-export { CreateUserService }
