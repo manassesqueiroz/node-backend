@@ -1,13 +1,15 @@
 import { FastifyReply, FastifyRequest } from 'fastify'
 import { PutPostService } from '../../services/posts/updatePostService'
-import { PostSchema } from './schemas'
+import { postSchemaPut, postSchemaUserId } from './schemas'
 
 export class PutPostController {
   async handle(request: FastifyRequest, reply: FastifyReply) {
-    const { userId } = PostSchema.parse(request.params)
-    const { id, title, content, published } = PostSchema.parse(request.body)
+    const { userId } = postSchemaUserId.parse(request.params)
+    const { id, title, content, published } = postSchemaPut.parse(request.body)
 
-    const updatePost = new PutPostService().execute({
+    const putPostService = new PutPostService()
+
+    const updatePost = await putPostService.execute({
       id,
       title,
       content,

@@ -2,7 +2,7 @@ import { Post } from '@prisma/client'
 import { prisma } from '../../database/prisma'
 import { CallError } from '../../helpers/callError'
 
-type PropsPost = {
+type propsPost = {
   id: string
   title: string
   content: string
@@ -16,7 +16,7 @@ export class PutPostService {
     content,
     published,
     userId,
-  }: PropsPost): Promise<Post> {
+  }: propsPost): Promise<Post> {
     const seachPost = await prisma.post.findUnique({
       where: {
         id,
@@ -27,7 +27,7 @@ export class PutPostService {
       throw new CallError('Post not found', 404)
     }
     if (userId !== seachPost.authorId) {
-      throw new CallError('Error', 401)
+      throw new CallError('User not Authorized', 403)
     }
 
     const updatePost = await prisma.post.update({

@@ -1,10 +1,12 @@
 import { FastifyInstance } from 'fastify'
-import { UserControllers } from '../controllers/users/users-controllers'
+import { GetUserControllers } from '../controllers/users/getControolers'
+import { PostUserControllers } from '../controllers/users/postControllers'
+import { PutUserControllers } from '../controllers/users/putControllers'
+import { DeleteUserControllers } from '../controllers/users/deleteControolers'
 
-const userControllers = new UserControllers()
 export async function Users(app: FastifyInstance) {
-  app.get('/', userControllers.getUsers)
-  app.post('/', userControllers.postUser)
-  app.put('/:id', userControllers.putUser)
-  app.delete('/:id', userControllers.deleteUser)
+  app.get('/', new GetUserControllers().handle)
+  app.post('/', new PostUserControllers().handle)
+  app.put('/:id', new PutUserControllers().handle)
+  app.delete('/:id', new DeleteUserControllers().handle)
 }
