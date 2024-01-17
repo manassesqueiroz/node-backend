@@ -1,22 +1,13 @@
 import { FastifyInstance } from 'fastify'
 import { CallError } from '../helpers/callError'
-import { randomUUID } from 'crypto'
-import { resolve } from 'node:path'
-import { createWriteStream } from 'node:fs'
-import { promisify } from 'node:util'
-import { pipeline } from 'node:stream'
+import { uploadFile } from '../external/supabase'
 
-const pump = promisify(pipeline)
 export async function Upload(app: FastifyInstance) {
   app.post('/image', async (request, reply) => {
-    const upload = await request.file({
-      limits: {
-        fileSize: 5_242_800, // 5mb
-      },
-    })
-    console.log(upload)
+    const upload = await request.file()
+
     if (!upload) {
-      return reply.status(400).send()
+      throw new CallError('', 400)
     }
 
     const mimeTypeRegex = /^(image|video)\/[a-zA-Z]+/
@@ -25,20 +16,11 @@ export async function Upload(app: FastifyInstance) {
     if (!isValidFileFormat) {
       throw new CallError('Invalid file type.', 400)
     }
-    const fileId = new Date().getTime().toString()
 
-    const fileName = fileId.concat(upload.filename)
-
-    console.log(fileName)
-
-    const writeStream = createWriteStream(
-      resolve(__dirname, '..', '..', 'uploads', fileName),
-    )
-    await pump(upload.file, writeStream)
-
-    const fullUrl = request.protocol.concat('://').concat(request.hostname)
-    const fileUrl = new URL(`/uploads/${fileName}`, fullUrl).toString()
-
-    return { fileUrl }
+    const filePath = await uploadFile(upload)
+    console.log(filePath)
+    // const fullUrl = request.protocol.concat('://').concat(request.hostname)
+    // const fileUrl = new URL(`/uploads/${fileName}`, fullUrl).toString()
+    return reply.status(200).send(filePath)
   })
 }
