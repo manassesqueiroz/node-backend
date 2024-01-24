@@ -21,7 +21,7 @@ export async function uploadFile(upload: fastifyMultipart.MultipartFile) {
       cacheControl: 'max-age=31536000',
     })
   if (error) {
-    return new CallError(error.message, 400)
+    throw new CallError(error.message, 400)
   } else {
     return data
   }
