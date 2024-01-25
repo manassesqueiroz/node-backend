@@ -1,14 +1,14 @@
 import { FastifyReply, FastifyRequest } from 'fastify'
 import { userSchema } from './schema'
-import { CreateUserService } from '../../services/users/createUserService'
+import { UserService } from '../../services/userServise'
 
 export class PostUserControllers {
   async handle(request: FastifyRequest, reply: FastifyReply) {
     const { name, email } = userSchema.parse(request.body)
 
-    const createUserService = new CreateUserService()
+    const userService = new UserService()
 
-    const user = await createUserService.execute({ name, email })
+    const user = await userService.createUser({ name, email })
 
     return reply.status(201).send(user)
   }
