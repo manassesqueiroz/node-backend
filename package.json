@@ -8,7 +8,7 @@
   },
   "scripts": {
     "postinstall": "prisma generate",
-    "dev": "bun --watch src/server.ts",
+    "dev": "tsx --watch --no-warnings src/server.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -25,6 +25,7 @@
     "fastify-multipart": "^5.4.0",
     "prisma": "^4.16.1",
     "ts-node-dev": "^2.0.0",
+    "tsx": "^4.7.0",
     "zod": "^3.21.4"
   },
   "devDependencies": {

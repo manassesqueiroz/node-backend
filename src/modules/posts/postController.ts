@@ -1,5 +1,5 @@
 import { FastifyReply, FastifyRequest } from 'fastify'
-import { PostServices } from '../services/postServise'
+import { PostServices } from './postService'
 import {
   postSchemaId,
   postSchemaPost,
@@ -20,9 +20,8 @@ export class PostController {
     const { authorId, published, content, title } = postSchemaPost.parse(
       request.body,
     )
-    const postService = new PostServices()
 
-    const post = await postService.createPost({
+    const post = await this.postService.createPost({
       title,
       authorId,
       content,
@@ -36,9 +35,7 @@ export class PostController {
     const { userId } = schemaUserId.parse(request.params)
     const { id, title, content, published } = postSchemaPut.parse(request.body)
 
-    const postService = new PostServices()
-
-    const updatePost = await postService.updatePost({
+    const updatePost = await this.postService.updatePost({
       id,
       title,
       content,
@@ -53,9 +50,7 @@ export class PostController {
     const { id } = postSchemaId.parse(request.body)
     const { userId } = schemaUserId.parse(request.params)
 
-    const deletePostServise = new PostServices()
-
-    await deletePostServise.deletePost({ id, userId })
+    await this.postService.deletePost({ id, userId })
 
     return reply.status(200).send({ message: 'Post deleted with success' })
   }
