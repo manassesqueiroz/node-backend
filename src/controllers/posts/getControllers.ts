@@ -1,11 +1,11 @@
 import { FastifyReply, FastifyRequest } from 'fastify'
-import { GetPostService } from '../../services/posts/getPostService'
+import { PostServices } from '../../services/postServise'
 
 export class GetPostController {
   async handle(request: FastifyRequest, reply: FastifyReply) {
-    const getPostService = new GetPostService()
+    const postService = new PostServices()
 
-    const post = await getPostService.execute()
+    const post = await postService.getPost()
 
     return reply.status(200).send(post)
   }

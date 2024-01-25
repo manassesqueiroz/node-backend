@@ -1,15 +1,15 @@
 import { FastifyReply, FastifyRequest } from 'fastify'
 import { postSchemaPost } from './schemas'
-import { PostPostService } from '../../services/posts/createPostService'
+import { PostServices } from '../../services/postServise'
 
 export class PostPostController {
   async handle(request: FastifyRequest, reply: FastifyReply) {
     const { authorId, published, content, title } = postSchemaPost.parse(
       request.body,
     )
-    const postPostService = new PostPostService()
+    const postService = new PostServices()
 
-    const post = await postPostService.execute({
+    const post = await postService.createPost({
       title,
       authorId,
       content,

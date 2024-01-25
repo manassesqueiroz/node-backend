@@ -1,11 +1,11 @@
 import { FastifyReply, FastifyRequest } from 'fastify'
-import { GetUserService } from '../../services/users/findUserService'
+import { UserService } from '../../services/userServise'
 
 export class GetUserControllers {
   async handle(request: FastifyRequest, reply: FastifyReply) {
-    const getUserService = new GetUserService()
+    const userService = new UserService()
 
-    const users = await getUserService.execute()
+    const users = await userService.findAll()
 
     return reply.status(200).send(users)
   }

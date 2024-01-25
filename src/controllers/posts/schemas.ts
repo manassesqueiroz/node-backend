@@ -13,7 +13,7 @@ export const postSchemaPost = z.object({
   published: boolean(),
   authorId: string().uuid({ message: 'Id inválido' }),
 })
-export const postSchemaUserId = z.object({
+export const schemaUserId = z.object({
   userId: string().uuid({ message: 'Id inválido' }),
 })
 
