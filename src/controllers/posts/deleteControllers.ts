@@ -1,15 +1,15 @@
-import { DeletePostServise } from '../../services/posts/deletePostService'
 import { FastifyReply, FastifyRequest } from 'fastify'
-import { postSchemaId, postSchemaUserId } from './schemas'
+import { postSchemaId, schemaUserId } from './schemas'
+import { PostServices } from '../../services/postServise'
 
 export class DeletePostController {
   async handle(request: FastifyRequest, reply: FastifyReply) {
     const { id } = postSchemaId.parse(request.body)
-    const { userId } = postSchemaUserId.parse(request.params)
+    const { userId } = schemaUserId.parse(request.params)
 
-    const deletePostServise = new DeletePostServise()
+    const deletePostServise = new PostServices()
 
-    await deletePostServise.execute({ id, userId })
+    await deletePostServise.deletePost({ id, userId })
 
     return reply.status(200).send({ message: 'Post deleted with success' })
   }
