@@ -32,6 +32,7 @@ export class PostServices {
   }
 
   async getPost(): Promise<Post[]> {
+    console.log('oi')
     const posts = await this.repository.findAll()
 
     return posts

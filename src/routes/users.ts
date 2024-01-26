@@ -5,8 +5,16 @@ import { FastifyInstance } from 'fastify'
 import { userFactory } from '../modules/users/userFactory'
 
 export async function Users(app: FastifyInstance) {
-  app.get('/', userFactory().getUser)
-  app.post('/', userFactory().createUser)
-  app.put('/:id', userFactory().updateUser)
-  app.delete('/:id', userFactory().deleteUser)
+  app.get('/', async (req, reply) => {
+    await userFactory.getUser(req, reply)
+  })
+  app.post('/', async (req, reply) => {
+    await userFactory.createUser(req, reply)
+  })
+  app.put('/:id', async (req, reply) => {
+    await userFactory.updateUser(req, reply)
+  })
+  app.delete('/:id', async (req, reply) => {
+    await userFactory.deleteUser(req, reply)
+  })
 }

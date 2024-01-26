@@ -19,15 +19,15 @@ export class PrismaUserRepositories implements IUserRepositories {
     return users
   }
 
-  async save({ email, name }: createUser): Promise<User> {
-    const user = await prisma.user.create({ data: { name, email } })
+  async save({ email, name, image }: createUser): Promise<User> {
+    const user = await prisma.user.create({ data: { name, email, image } })
     return user
   }
 
-  async update({ email, name, id }: updateUser): Promise<User> {
+  async update({ image, name, id }: updateUser): Promise<User> {
     const user = await prisma.user.update({
       where: { id },
-      data: { name, email },
+      data: { name, image },
     })
     return user
   }
