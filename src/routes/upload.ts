@@ -1,6 +1,8 @@
 import { FastifyInstance } from 'fastify'
-import { UploadImageController } from '../modules/upload/uploadImageController'
+import { uploadFactory } from '../modules/upload/uploadFactory'
 
 export async function Upload(app: FastifyInstance) {
-  app.post('/image', new UploadImageController().handle)
+  app.post('/image', async (req, reply) => {
+    await uploadFactory.Image(req, reply)
+  })
 }

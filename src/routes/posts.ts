@@ -1,14 +1,17 @@
 import type { FastifyInstance } from 'fastify'
-import { PostController } from '../modules/posts/postController'
-import { PostServices } from '../modules/posts/postService'
-import { prisma } from '../database/prisma'
-
-const postService = new PostServices(prisma)
-const postController = new PostController(postService)
+import { postFactory } from '../modules/posts/postFactory'
 
 export async function Posts(app: FastifyInstance) {
-  app.get('/', postController.getPosts)
-  app.post('/', postController.createPost)
-  app.put('/:userId', postController.updatePost)
-  app.delete('/:userId', postController.deletePost)
+  app.get('/', async (req, reply) => {
+    await postFactory.getPosts(req, reply)
+  })
+  app.post('/', async (req, reply) => {
+    await postFactory.createPost(req, reply)
+  })
+  app.put('/:userId', async (req, reply) => {
+    await postFactory.updatePost(req, reply)
+  })
+  app.delete('/:userId', async (req, reply) => {
+    await postFactory.deletePost(req, reply)
+  })
 }

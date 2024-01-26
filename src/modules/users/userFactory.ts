@@ -2,9 +2,12 @@ import { PrismaUserRepositories } from '../../repositories/prisma/PrismaUserRepo
 import { UserController } from './userController'
 import { UserService } from './userService'
 
-export const userFactory = () => {
+const UserFactory = () => {
   const prismaUserRepositories = new PrismaUserRepositories()
   const userService = new UserService(prismaUserRepositories)
+
   const userController = new UserController(userService)
   return userController
 }
+
+export const userFactory = UserFactory()

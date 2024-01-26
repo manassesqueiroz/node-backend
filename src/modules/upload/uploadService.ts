@@ -1,28 +1,26 @@
+import * as fastifyMultipart from '@fastify/multipart'
 import { SupabaseClient } from '@supabase/supabase-js'
 import { CallError } from '../../helpers/callError'
-import * as fastifyMultipart from '@fastify/multipart'
 
-export class UploadFile {
+export class UploadService {
   constructor(private supabase: SupabaseClient) {}
 
-  async image(upload: fastifyMultipart.MultipartFile) {
+  async imageUpload(image: fastifyMultipart.MultipartFile) {
     const time = new Date().getTime().toString()
 
-    const fileName = time.concat(upload.filename).split(' ').join('_')
+    const fileName = time.concat(image.filename).split(' ').join('_')
 
     const { data, error } = await this.supabase.storage
       .from('file')
-      .upload(fileName, upload.file, {
-        duplex: 'half',
+      .upload(fileName, image.file, {
         upsert: true,
-        contentType: upload.mimetype,
-        cacheControl: 'max-age=31536000',
+        contentType: image.mimetype,
       })
 
     if (error) {
       throw new CallError(error.message, 400)
-    } else {
-      return data
     }
+
+    return data
   }
 }

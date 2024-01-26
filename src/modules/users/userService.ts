@@ -6,27 +6,28 @@ import { IUserRepositories } from '../../repositories/IUserRepositories'
 export interface createUser {
   name: string
   email: string
+  image?: string
 }
 export interface updateUser extends createUser {
   id: string
 }
 
 export class UserService {
-  constructor(private readonly repository: IUserRepositories) {}
+  constructor(private repository: IUserRepositories) {}
 
   async findAll(): Promise<User[]> {
     const users = await this.repository.findAll()
     return users
   }
 
-  async createUser({ name, email }: createUser): Promise<User> {
+  async createUser({ name, email, image }: createUser): Promise<User> {
     const findUser = await this.repository.findByEmail(email)
 
     if (findUser) {
       throw new CallError('User already exists', 400)
     }
 
-    const user = await this.repository.save({ name, email })
+    const user = await this.repository.save({ name, email, image })
 
     return user
   }
