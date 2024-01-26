@@ -6,7 +6,7 @@ import { userFactory } from '../modules/users/userFactory'
 
 export async function Users(app: FastifyInstance) {
   app.get('/', userFactory().getUser)
-  // app.post('/', userController.createUser)
-  // app.put('/:id', userController.updateUser)
-  // app.delete('/:id', userController.deleteUser)
+  app.post('/', userFactory().createUser)
+  app.put('/:id', userFactory().updateUser)
+  app.delete('/:id', userFactory().deleteUser)
 }

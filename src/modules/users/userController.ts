@@ -12,28 +12,28 @@ export class UserController {
     return reply.status(200)
   }
 
-  // async createUser(request: FastifyRequest, reply: FastifyReply) {
-  //   const { name, email } = userSchema.parse(request.body)
+  async createUser(request: FastifyRequest, reply: FastifyReply) {
+    const { name, email } = userSchema.parse(request.body)
 
-  //   const user = await this.userService.createUser({ name, email })
+    const user = await this.userService.createUser({ name, email })
 
-  //   return reply.status(201).send(user)
-  // }
+    return reply.status(201).send(user)
+  }
 
-  //   async updateUser(request: FastifyRequest, reply: FastifyReply) {
-  //     const { email, name } = userSchema.parse(request.body)
-  //     const { id } = userSchemaId.parse(request.params)
+  async updateUser(request: FastifyRequest, reply: FastifyReply) {
+    const { email, name } = userSchema.parse(request.body)
+    const { id } = userSchemaId.parse(request.params)
 
-  //     const user = await this.userService.updateUser({ email, name, id })
+    const user = await this.userService.updateUser({ email, name, id })
 
-  //     return reply.status(200).send(user)
-  //   }
+    return reply.status(200).send(user)
+  }
 
-  //   async deleteUser(request: FastifyRequest, reply: FastifyReply) {
-  //     const { id } = userSchemaId.parse(request.params)
+  async deleteUser(request: FastifyRequest, reply: FastifyReply) {
+    const { id } = userSchemaId.parse(request.params)
 
-  //     await this.userService.deleteUser({ id })
+    await this.userService.deleteUser(id)
 
-  //     return reply.status(200).send({ message: 'User deleted with success' })
-  //   }
+    return reply.status(200).send({ message: 'User deleted with success' })
+  }
 }
