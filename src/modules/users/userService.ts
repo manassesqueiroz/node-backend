@@ -1,5 +1,6 @@
-import { prisma } from '../database/prisma'
-import { CallError } from '../helpers/callError'
+import { CallError } from '../../helpers/callError'
+import { prisma } from '../../database/prisma'
+import { User } from '@prisma/client'
 
 type createUserProps = {
   name: string
@@ -34,23 +35,18 @@ export class UserService {
     return user
   }
 
-  async findAll() {
+  async findAll(): Promise<User[]> {
+    console.log('4wfe')
+
     const users = await prisma.user.findMany({
       orderBy: {
         createdAt: 'asc',
-      },
-      select: {
-        id: true,
-        name: true,
-        email: true,
-        createdAt: true,
-        updatedAt: true,
       },
     })
     return users
   }
 
-  async updateUser({ name, email, id }: updateUserProps) {
+  async updateUser({ name, email, id }: updateUserProps): Promise<User> {
     const user = await prisma.user.findUnique({
       where: {
         id,
@@ -74,7 +70,7 @@ export class UserService {
     return updateUser
   }
 
-  async deleteUser({ id }: deleteUserProps) {
+  async deleteUser({ id }: deleteUserProps): Promise<void> {
     const user = await prisma.user.findUnique({
       where: {
         id,

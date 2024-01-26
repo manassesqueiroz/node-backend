@@ -1,7 +1,9 @@
 import { FastifyReply, FastifyRequest } from 'fastify'
-import { uploadFile } from '../../external/supabase'
+import { UploadFile } from '../../external/supabase/supabase-uploud-files'
 import { CallError } from '../../helpers/callError'
+import { supabase } from '../../external/supabase/createClient'
 
+const uploadFile = new UploadFile(supabase)
 export class UploadImageController {
   async handle(request: FastifyRequest, reply: FastifyReply) {
     const upload = await request.file()
@@ -17,7 +19,7 @@ export class UploadImageController {
       throw new CallError('Invalid file type.', 400)
     }
 
-    const filePath = await uploadFile(upload)
+    const filePath = await uploadFile.image(upload)
     console.log(filePath.path)
     // const fullUrl = request.protocol.concat('://').concat(request.hostname)
     // const fileUrl = new URL(`/uploads/${fileName}`, fullUrl).toString()

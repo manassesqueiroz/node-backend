@@ -1,6 +1,5 @@
-import { Post } from '@prisma/client'
-import { prisma } from '../database/prisma'
-import { CallError } from '../helpers/callError'
+import { Post, PrismaClient } from '@prisma/client'
+import { CallError } from '../../helpers/callError'
 
 type deletePost = {
   id: string
@@ -20,8 +19,9 @@ type CreatePost = {
   published: boolean
 }
 export class PostServices {
+  constructor(private readonly prisma: PrismaClient) {}
   async createPost({ title, authorId, content, published }: CreatePost) {
-    const createPost = await prisma.post.create({
+    const createPost = await this.prisma.post.create({
       data: {
         title,
         authorId,
@@ -34,7 +34,7 @@ export class PostServices {
   }
 
   async deletePost({ id, userId }: deletePost): Promise<void> {
-    const seachPost = await prisma.post.findUnique({
+    const seachPost = await this.prisma.post.findUnique({
       where: {
         id,
       },
@@ -47,7 +47,7 @@ export class PostServices {
       throw new CallError('User not Authorized', 403)
     }
 
-    await prisma.post.delete({
+    await this.prisma.post.delete({
       where: {
         id,
       },
@@ -55,7 +55,7 @@ export class PostServices {
   }
 
   async getPost(): Promise<Post[]> {
-    const posts = await prisma.post.findMany()
+    const posts = await this.prisma.post.findMany()
 
     return posts
   }
@@ -67,7 +67,7 @@ export class PostServices {
     published,
     userId,
   }: updatePost): Promise<Post> {
-    const seachPost = await prisma.post.findUnique({
+    const seachPost = await this.prisma.post.findUnique({
       where: {
         id,
       },
@@ -80,7 +80,7 @@ export class PostServices {
       throw new CallError('User not Authorized', 403)
     }
 
-    const updatePost = await prisma.post.update({
+    const updatePost = await this.prisma.post.update({
       where: {
         id,
       },
