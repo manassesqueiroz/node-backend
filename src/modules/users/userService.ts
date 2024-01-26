@@ -1,82 +1,52 @@
 import { CallError } from '../../helpers/callError'
 import { prisma } from '../../database/prisma'
 import { User } from '@prisma/client'
+import { IUserRepositories } from '../../repositories/IUserRepositories'
 
-type createUserProps = {
+export interface createUser {
   name: string
   email: string
 }
-type updateUserProps = {
-  id: string
-  name: string
-  email: string
-}
-type deleteUserProps = {
+export interface updateUser extends createUser {
   id: string
 }
 
 export class UserService {
-  async createUser({ name, email }: createUserProps) {
-    const seachUser = await prisma.user.findUnique({
-      where: {
-        email,
-      },
-    })
-    if (seachUser) {
+  constructor(private readonly repository: IUserRepositories) {}
+
+  async findAll(): Promise<User[]> {
+    const users = await this.repository.findAll()
+    return users
+  }
+
+  async createUser({ name, email }: createUser): Promise<User> {
+    const findUser = await this.repository.findByEmail(email)
+
+    if (findUser) {
       throw new CallError('User already exists', 400)
     }
-    const user = await prisma.user.create({
-      data: {
-        name,
-        email,
-      },
-    })
+
+    const user = await this.repository.save({ name, email })
 
     return user
   }
 
-  async findAll(): Promise<User[]> {
-    console.log('4wfe')
+  async updateUser({ name, email, id }: updateUser): Promise<User> {
+    const exists = await this.repository.exists(id)
 
-    const users = await prisma.user.findMany({
-      orderBy: {
-        createdAt: 'asc',
-      },
-    })
-    return users
-  }
-
-  async updateUser({ name, email, id }: updateUserProps): Promise<User> {
-    const user = await prisma.user.findUnique({
-      where: {
-        id,
-      },
-    })
-
-    if (!user) {
+    if (!exists) {
       throw new CallError('User not found', 404)
     }
 
-    const updateUser = await prisma.user.update({
-      where: {
-        id,
-      },
-      data: {
-        email,
-        name,
-      },
-    })
+    const updateUser = await this.repository.update({ name, email, id })
 
     return updateUser
   }
 
-  async deleteUser({ id }: deleteUserProps): Promise<void> {
-    const user = await prisma.user.findUnique({
-      where: {
-        id,
-      },
-    })
-    if (!user) {
+  async deleteUser(id: string): Promise<void> {
+    const exists = await this.repository.exists(id)
+
+    if (!exists) {
       throw new CallError('User not found', 404)
     }
 

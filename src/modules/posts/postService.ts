@@ -1,61 +1,38 @@
-import { Post, PrismaClient } from '@prisma/client'
+import { Post } from '@prisma/client'
 import { CallError } from '../../helpers/callError'
+import { IPostRepositories } from '../../repositories/IPostRepositories'
 
-type deletePost = {
+export interface deletePost {
   id: string
   userId: string
 }
-type updatePost = {
-  id: string
+export interface updatePost extends deletePost {
   title: string
   content: string
   published: boolean
-  userId: string
 }
-type CreatePost = {
+
+export type CreatePost = {
   title: string
   authorId: string
   content: string
   published: boolean
 }
 export class PostServices {
-  constructor(private readonly prisma: PrismaClient) {}
+  constructor(private readonly repository: IPostRepositories) {}
   async createPost({ title, authorId, content, published }: CreatePost) {
-    const createPost = await this.prisma.post.create({
-      data: {
-        title,
-        authorId,
-        content,
-        published,
-      },
+    const createPost = await this.repository.save({
+      title,
+      authorId,
+      content,
+      published,
     })
 
     return createPost
   }
 
-  async deletePost({ id, userId }: deletePost): Promise<void> {
-    const seachPost = await this.prisma.post.findUnique({
-      where: {
-        id,
-      },
-    })
-
-    if (!seachPost) {
-      throw new CallError('Post not found', 404)
-    }
-    if (seachPost.authorId !== userId) {
-      throw new CallError('User not Authorized', 403)
-    }
-
-    await this.prisma.post.delete({
-      where: {
-        id,
-      },
-    })
-  }
-
   async getPost(): Promise<Post[]> {
-    const posts = await this.prisma.post.findMany()
+    const posts = await this.repository.findAll()
 
     return posts
   }
@@ -67,29 +44,34 @@ export class PostServices {
     published,
     userId,
   }: updatePost): Promise<Post> {
-    const seachPost = await this.prisma.post.findUnique({
-      where: {
-        id,
-      },
-    })
+    const exists = await this.repository.exists(id)
 
-    if (!seachPost) {
+    if (!exists) {
       throw new CallError('Post not found', 404)
     }
-    if (userId !== seachPost.authorId) {
+    if (userId !== id) {
       throw new CallError('User not Authorized', 403)
     }
 
-    const updatePost = await this.prisma.post.update({
-      where: {
-        id,
-      },
-      data: {
-        title,
-        content,
-        published,
-      },
+    const updatePost = await this.repository.update({
+      id,
+      title,
+      content,
+      published,
     })
     return updatePost
+  }
+
+  async deletePost({ id, userId }: deletePost): Promise<void> {
+    const exists = await this.repository.exists(id)
+
+    if (!exists) {
+      throw new CallError('Post not found', 404)
+    }
+    if (id !== userId) {
+      throw new CallError('User not Authorized', 403)
+    }
+
+    await this.repository.delete(id)
   }
 }
