@@ -3,8 +3,8 @@ import { UserService } from './userService'
 import { userSchema, userSchemaId } from './schema'
 
 export class UserController {
-  constructor(private readonly userService: UserService) {}
-  
+  constructor(private userService: UserService) {}
+
   async getUser(request: FastifyRequest, reply: FastifyReply) {
     console.log('tets')
     await this.userService.findAll()
