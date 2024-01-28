@@ -14,20 +14,56 @@ export class PrismaUserRepositories implements IUserRepositories {
     return !!user
   }
 
-  async findAll(): Promise<User[]> {
-    const users = await prisma.user.findMany()
+  async findAll(): Promise<Omit<User, 'password'>[]> {
+    const users = await prisma.user.findMany({
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        image: true,
+        updatedAt: true,
+        createdAt: true,
+      },
+    })
     return users
   }
 
-  async save({ email, name, image }: createUser): Promise<User> {
-    const user = await prisma.user.create({ data: { name, email, image } })
+  async save({
+    email,
+    name,
+    image,
+    password,
+  }: createUser): Promise<Omit<User, 'password'>> {
+    const user = await prisma.user.create({
+      data: { name, email, image, password },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        image: true,
+        updatedAt: true,
+        createdAt: true,
+      },
+    })
     return user
   }
 
-  async update({ image, name, id }: updateUser): Promise<User> {
+  async update({
+    image,
+    name,
+    id,
+  }: updateUser): Promise<Omit<User, 'password'>> {
     const user = await prisma.user.update({
       where: { id },
       data: { name, image },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        image: true,
+        updatedAt: true,
+        createdAt: true,
+      },
     })
     return user
   }
