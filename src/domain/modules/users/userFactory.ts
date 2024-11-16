@@ -1,4 +1,4 @@
-import { PrismaUserRepositories } from '../../repositories/prisma/PrismaUserRepositories'
+import { PrismaUserRepositories } from '@/repositories/prisma/PrismaUserRepositories'
 import { UserController } from './userController'
 import { UserService } from './userService'
 

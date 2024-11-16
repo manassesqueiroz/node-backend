@@ -1,6 +1,6 @@
+import { CallError } from '@/main/helpers/callError'
 import * as fastifyMultipart from '@fastify/multipart'
 import { SupabaseClient } from '@supabase/supabase-js'
-import { CallError } from '../../helpers/callError'
 
 export class UploadService {
   constructor(private supabase: SupabaseClient) {}
@@ -20,7 +20,6 @@ export class UploadService {
     if (error) {
       throw new CallError(error.message, 400)
     }
-
     return data
   }
 }

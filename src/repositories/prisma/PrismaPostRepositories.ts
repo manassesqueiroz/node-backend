@@ -1,7 +1,7 @@
 import { Post } from '@prisma/client'
 import { prisma } from '../../database/prisma'
-import { CreatePost, updatePost } from '../../modules/posts/postService'
 import { IPostRepositories } from '../IPostRepositories'
+import { CreatePost, updatePost } from '@/domain/modules/posts/postService'
 
 export class PrismaPostRepositories implements IPostRepositories {
   async exists(id: string): Promise<boolean> {

@@ -1,5 +1,5 @@
+import { postFactory } from '@/domain/modules/posts/postFactory'
 import type { FastifyInstance } from 'fastify'
-import { postFactory } from '../modules/posts/postFactory'
 
 export async function Posts(app: FastifyInstance) {
   app.get('/', async (req, reply) => {

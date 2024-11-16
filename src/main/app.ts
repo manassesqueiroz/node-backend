@@ -3,8 +3,8 @@ import multipart from '@fastify/multipart'
 import { Users } from './routes/users'
 import { Posts } from './routes/posts'
 import { Upload } from './routes/upload'
-import { ErrorControllers } from './middleware/errors'
 import { FastifyInstance } from 'fastify/types/instance'
+import { ErrorControllers } from '@/middleware/errors'
 
 // import { resolve } from 'node:path'
 // import { fastifyStatic } from '@fastify/static'
@@ -18,7 +18,6 @@ export class App {
   constructor() {
     this.server = fastify()
     this.errorControllers = new ErrorControllers()
-
     this.server.register(multipart)
     this.server
       .register(Users, {

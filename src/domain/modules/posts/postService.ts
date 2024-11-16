@@ -1,6 +1,6 @@
+import { CallError } from '@/main/helpers/callError'
+import { IPostRepositories } from '@/repositories/IPostRepositories'
 import { Post } from '@prisma/client'
-import { CallError } from '../../helpers/callError'
-import { IPostRepositories } from '../../repositories/IPostRepositories'
 
 export interface deletePost {
   id: string

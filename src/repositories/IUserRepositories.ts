@@ -1,5 +1,5 @@
+import { createUser, updateUser } from '@/domain/modules/users/userService'
 import { User } from '@prisma/client'
-import { createUser, updateUser } from '../modules/users/userService'
 
 export abstract class IUserRepositories {
   abstract findByEmail(email: string): Promise<User | null>

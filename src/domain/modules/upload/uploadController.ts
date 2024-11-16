@@ -1,6 +1,6 @@
 import { FastifyReply, FastifyRequest } from 'fastify'
-import { CallError } from '../../helpers/callError'
 import { UploadService } from './uploadService'
+import { CallError } from '@/main/helpers/callError'
 
 export class UploadImageController {
   constructor(private readonly uploadService: UploadService) {}

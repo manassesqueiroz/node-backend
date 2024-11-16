@@ -1,4 +1,4 @@
-import { supabase } from '../../external/supabase/createClient'
+import { supabase } from '@/infra/supabase'
 import { UploadImageController } from './uploadController'
 import { UploadService } from './uploadService'
 

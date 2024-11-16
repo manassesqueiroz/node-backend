@@ -1,5 +1,5 @@
+import { CreatePost, updatePost } from '@/domain/modules/posts/postService'
 import { Post } from '@prisma/client'
-import { CreatePost, updatePost } from '../modules/posts/postService'
 
 export abstract class IPostRepositories {
   abstract exists(id: string): Promise<boolean>

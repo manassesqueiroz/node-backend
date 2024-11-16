@@ -1,7 +1,7 @@
-import { CallError } from '../../helpers/callError'
-import { prisma } from '../../database/prisma'
+import { prisma } from '@/database/prisma'
+import { CallError } from '@/main/helpers/callError'
+import { IUserRepositories } from '@/repositories/IUserRepositories'
 import { User } from '@prisma/client'
-import { IUserRepositories } from '../../repositories/IUserRepositories'
 import bcrypt from 'bcrypt'
 
 export interface createUser {

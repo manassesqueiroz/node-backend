@@ -1,7 +1,7 @@
 import { User } from '@prisma/client'
-import { createUser, updateUser } from '../../modules/users/userService'
 import { IUserRepositories } from '../IUserRepositories'
 import { prisma } from '../../database/prisma'
+import { createUser, updateUser } from '@/domain/modules/users/userService'
 
 export class PrismaUserRepositories implements IUserRepositories {
   async findByEmail(email: string): Promise<User | null> {
